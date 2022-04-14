@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 def check_license_plate(image:bytes) -> str:
     """ Takes image bytes, returns plate number  """
     URL = "https://api.platerecognizer.com/v1/plate-reader/" # API endpoint
-    API_KEY = os.getenv("API_KEY") # Load API key env var
+    API_KEY = os.getenv("ANPR_API_KEY") # Load API key env var
 
     # Make request
     response = requests.post(
