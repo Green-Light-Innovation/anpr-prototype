@@ -22,21 +22,3 @@ CREATE TABLE CarLocations
     location_name TEXT, -- Name of location (street name)
     facing TEXT -- Direction camera is facing (N,E,S,W)
 );
-
--- TEMP
--- Auto populate with some data
-
--- Location
-INSERT INTO CarLocations (lat, lon, location_name, facing)
-VALUES (50.2242, -1.2323, "A cool location", "N");
-
-
--- Cars
-INSERT INTO Cars (plate, recorded_datetime, make, manufacture_year, emissions, fuel_type, mot_date, car_location)
-VALUES ("Y18JDA", strftime("%s", "now"), "Ford", 2011, 103.2, "PETROL", 2022, 1);
-
-INSERT INTO Cars (plate, recorded_datetime, make, manufacture_year, emissions, fuel_type, mot_date, car_location)
-VALUES ("UDJ128", strftime("%s", "now"), "Vauxhall", 2015, 203.2, "DIESEL", 2022, 1);
-
-INSERT INTO Cars (plate, recorded_datetime, make, manufacture_year, emissions, fuel_type, mot_date, car_location)
-VALUES ("XYKLM2", strftime("%s", "now"), "Mini", 2011, 100.4, "PETROL", 2022, 1);
