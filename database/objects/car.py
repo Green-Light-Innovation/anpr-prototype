@@ -39,7 +39,32 @@ class Car:
     def get_fuel_type(self) -> str: return self.__fuel_type
     def get_mot_date(self) -> str: return self.__mot_date
     def get_car_location(self) -> CarLocation: return self.__car_location
-    # TODO ADD GETTER FOR CARLOCATION
+    
+    def save_to_database(self) -> None:
+        """ Save the object's data to the database """
+
+        # SQL query to insert new record into Cars table
+        query = """
+        INSERT INTO Cars (plate, recorded_datetime, make, manufacture_year, emissions, fuel_type, mot_date, car_location)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        """
+
+        DatabaseEngine.connect() # Connect to the database
+        
+        # Execute the SQL query with given parameters
+        DatabaseEngine.cursor.execute(query, (
+            self.__plate,
+            self.__recorded_datetime,
+            self.__make,
+            self.__manufacture_year,
+            self.__emissions,
+            self.__fuel_type,
+            self.__mot_date,
+            self.__car_location
+        ))
+
+        DatabaseEngine.commit() # Commit changes made to the table
+        DatabaseEngine.disconnect() # Disconnect from the database
 
     def __repr__(self) -> str:
         return f"<Car - {self.__plate}>"

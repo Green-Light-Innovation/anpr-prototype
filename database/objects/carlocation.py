@@ -4,13 +4,20 @@ class CarLocation:
 
     @staticmethod
     def load_from_database(ID:int) -> object:
-        query = "SELECT * FROM CarLocations WHERE ID = ?;"
+        """ Create a new CarLocation object using data loaded from the database """
+        
+        query = "SELECT * FROM CarLocations WHERE ID = ?;" # SQL query executed on the database
 
-        DatabaseEngine.connect()
+        DatabaseEngine.connect() # Connect to the database
+
+        # Fetch data from the database using the ID parameter
+        # Only one item should be returned so the fetchone() function is used
         data = DatabaseEngine.cursor.execute(query, (ID,)).fetchone()
-        DatabaseEngine.disconnect()
+        DatabaseEngine.disconnect() # Disconnect from the database
 
-        return CarLocation(*data)
+        if not data: return None # If no data could be found, return None object
+
+        return CarLocation(*data) # Return the data
 
     def __init__(self, ID:int, lat:float, lon:float, location_name:str, facing:str) -> object:
         self.__ID = ID
@@ -25,6 +32,28 @@ class CarLocation:
     def get_longitude(self) -> float: return self.__lon
     def get_location_name(self) -> str: return self.__location_name
     def get_facing(self) -> str: return self.__facing
+
+    def save_to_database(self) -> None:
+        """ Save the object's data to the database """
+
+        # SQL query to insert new record into CarLocations table
+        query = """
+        INSERT INTO CarLocations (lat, lon, location_name, facing)
+        VALUES (?, ?, ?, ?);
+        """
+
+        DatabaseEngine.connect() # Connect to the database
+        
+        # Execute SQL query with parameters
+        DatabaseEngine.cursor.execute(query, (
+            self.__lat,
+            self.__lon,
+            self.__location_name,
+            self.__facing
+        ))
+
+        DatabaseEngine.commit() # Commit the changes made
+        DatabaseEngine.disconnect() # Disconnect from the database
 
     def __repr__(self) -> str:
         return f"<CarLocation - Lat: {self.__lat} Lon: {self.__lon}>"
