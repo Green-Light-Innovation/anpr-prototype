@@ -1,7 +1,7 @@
 -- The cars table stores all of the information on a car collected using the DLVA VES API
 CREATE TABLE Cars
 (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    ID TEXT,
     plate TEXT, -- License plate number
     recorded_datetime INT, -- Date and time plate was recorded UNIX TIME
     make TEXT, -- make of car
@@ -16,7 +16,7 @@ CREATE TABLE Cars
 -- The location table stores geographical locations of where the data was collected from
 CREATE TABLE CarLocations
 (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT, 
+    ID TEXT, 
     lat REAL, -- Location Latitude
     lon REAL, -- Location Longitude
     location_name TEXT, -- Name of location (street name)

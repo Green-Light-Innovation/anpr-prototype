@@ -1,5 +1,7 @@
 import os
 import sqlite3
+import string
+import random
 
 class DatabaseEngine:
 
@@ -51,7 +53,31 @@ class DatabaseEngine:
         with open(DatabaseEngine.schema_path, "r") as file:
             schema = file.read()
 
-        DatabaseEngine.cursor.execute(schema)   # Execute schema SQL on database
-        DatabaseEngine.commit()      # Commit changes
-        DatabaseEngine.disconnect()             # Close connection
+        DatabaseEngine.cursor.execute(schema) # Execute schema SQL on database
+        DatabaseEngine.commit() # Commit changes
+        DatabaseEngine.disconnect() # Close connection
+
+    @staticmethod
+    def gen_id() -> str:
+        """ Generate a unique ID """
+        # A unique ID consists of 16 randomly selected upper/lowecase letters and numbers
+
+        ID = ""
+        for x in range(32):
+            ID += random.choice(list(string.ascii_letters + string.digits))
+
+        return ID
+
+    @staticmethod
+    def id_exists(table:str, ID:str) -> bool:
+        """ Check if ID already exists in a table """
+        
+        query = "SELECT ID FROM ? WHERE ID = ?;" # SQL query
+        
+        DatabaseEngine.connect() # Connect to the database
+        data = DatabaseEngine.cursor.execute(query, (table, ID)).fetchone() # Execute the query and fetch one record
+        DatabaseEngine.disconnect()
+
+        if not data: return False # Return false if no data is found
+        return True
 
