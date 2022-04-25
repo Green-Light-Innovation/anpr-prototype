@@ -65,9 +65,25 @@ class Car:
     def get_emissions(self) -> float: return self.__emissions
     def get_fuel_type(self) -> str: return self.__fuel_type
     def get_car_location(self) -> CarLocation: return self.__car_location
+
+    def is_recorded(self) -> bool:
+        """ Checks if the plate has been recorded previously in the data base within the last 5 minutes """
+        car = Car.load_from_database(self.__plate)
+        
+        if not car: return False # if no record was found, return false
+
+        # check if previously recorded car has been recorded at least 5 minutes
+        # before being recorded again
+        if car.get_recorded_datetime() + (5*60) < self.__recorded_datetime:
+            return False
+
+        return True
+
     
     def save_to_database(self) -> None:
         """ Save the object's data to the database """
+
+        if self.is_recorded(): return # Dont record car is already recorded
 
         # SQL query to insert new record into Cars table
         query = """
