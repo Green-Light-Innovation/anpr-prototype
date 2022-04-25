@@ -71,7 +71,7 @@ class Car:
 
         # SQL query to insert new record into Cars table
         query = """
-        INSERT INTO Cars (ID, plate, recorded_datetime, make, manufacture_year, emissions, fuel_type, mot_date, car_location)
+        INSERT INTO Cars (ID, plate, recorded_datetime, make, manufacture_year, emissions, fuel_type, car_location)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
         """
 
