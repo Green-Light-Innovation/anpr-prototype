@@ -8,7 +8,6 @@ CREATE TABLE Cars
     manufacture_year INT, -- Year of manufacture UNIX TIME
     emissions REAL, -- Emissions g/km
     fuel_type TEXT, -- Car fuel type
-    mot_date INT, -- Due date of MOT UNIX TIME
     car_location INT, -- Foreign Key of CarLocations record
     FOREIGN KEY (car_location) REFERENCES CarLocations(ID) 
 );
