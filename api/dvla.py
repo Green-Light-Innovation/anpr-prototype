@@ -20,4 +20,8 @@ def search_plate_number(plate_number:str) -> dict:
         }
     )
 
-    return json.loads(response.text)
+    data = json.loads(response.text)
+    
+    if "errors" in data: return None # Return None value if there was an error
+    
+    return data

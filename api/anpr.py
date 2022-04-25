@@ -18,8 +18,13 @@ def check_license_plate(image:bytes) -> str:
         headers = {"Authorization": f"Token {API_KEY}"}
     )
 
+    data = json.loads(response.text)
+    
+    # Return None if no results are found
+    if not data['results']: return None 
+
     # Parse the plate number from the JSON response and return
-    return json.loads(response.text)["results"][0]["plate"]
+    return data["results"][0]["plate"]
 
     
     
