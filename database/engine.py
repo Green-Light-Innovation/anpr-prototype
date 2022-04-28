@@ -53,7 +53,7 @@ class DatabaseEngine:
         with open(DatabaseEngine.schema_path, "r") as file:
             schema = file.read()
 
-        DatabaseEngine.cursor.execute(schema) # Execute schema SQL on database
+        DatabaseEngine.cursor.executescript(schema) # Execute schema SQL on database
         DatabaseEngine.commit() # Commit changes
         DatabaseEngine.disconnect() # Close connection
 
